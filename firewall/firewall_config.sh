@@ -2,6 +2,8 @@
 
 # firewall_config.sh - This script installs and configures nftables
 # Usage: ./firewall_config.sh
+#   If the IP address is not found, use:
+#   ./firewall_config.sh <ip_addr>
 
 # ===== Colors =====
 green='\e[32m'
@@ -14,7 +16,42 @@ reset='\e[0m'
 script_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
 rules_file="$script_dir/default_rules.nft"
 backup_dir="/etc/nftables"
+iptables_backup_dir="/etc/iptables"
+iptables_backup_file=""$iptables_backup_dir"/iptables_ipv4.rules"
 # =================
+
+# ===== Detect Host IP =====
+host_ip="$(ip -4 -o addr show scope global | awk '$4 ~ /^10\.110\.10\./ {print $4}' | cut -d/ -f1):-"$1""
+if [ -z "$host_ip" ]; then
+    echo -e "${red}Could not determine competition host IP.${reset}"
+    exit 1
+fi
+echo "Detected host IP: $host_ip"
+# ==========================
+
+# ===== Rules File =====
+case "$host_ip" in
+    10.110.10.11)
+        rules_file="$script_dir/rules/geonosis.nft"
+        ;;
+    10.110.10.12)
+        rules_file="$script_dir/rules/mandalore.nft"
+        ;;
+    10.110.10.13)
+        rules_file="$script_dir/rules/kashyyyk.nft"
+        ;;
+    10.110.10.14)
+        rules_file="$script_dir/rules/utapau.nft"
+        ;;
+    10.110.10.15)
+        rules_file="$script_dir/rules/mustafar.nft"
+        ;;
+    *)
+        echo -e "${red}Unknown competition host IP: $host_ip${reset}"
+        exit 1
+        ;;
+esac
+# ======================
 
 # verify_root ensures that this script is run with root permissions
 #
@@ -26,6 +63,16 @@ verify_root() {
         echo -e "${yellow}This script must be run as ${green}root${yellow}. Exiting...${reset}"
         exit 1
     fi
+}
+
+# backup_iptables backs up the iptables configuration in case iptables is used
+#
+# Takes no arguments
+#
+# Returns nothing
+backup_iptables() {
+    mkdir -p "$iptables_backup_dir"
+    iptables-save > "$iptables_backup_file"
 }
 
 # detect_distro detects the linux distribution and prints the value
@@ -290,4 +337,6 @@ main() {
     apply_default_ruleset "$backup_name"
 }
 
-main
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
+    main
+fi

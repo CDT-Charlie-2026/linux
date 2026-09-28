@@ -1,0 +1,45 @@
+#!/usr/sbin/nft -f
+
+table inet filter {
+    chain input {
+        type filter hook input priority 0;
+        policy drop;
+
+        # Allow existing connections
+        ct state established,related accept
+
+        # Allow loopback
+        iif "lo" accept
+
+        # Allow SSH
+        tcp dport 22 accept
+
+        # ICMP ping
+        ip protocol icmp accept
+
+        # Service specific rules go here
+        # Apache
+        tcp dport { 80, 443 } accept
+
+        # Log dropped packets
+        log prefix "nftables-drop-input: " flags all
+    }
+
+    chain forward {
+        type filter hook forward priority 0;
+        policy drop;
+
+        log prefix "nftables-drop/forward: " flags all
+    }
+
+    chain output {
+        type filter hook output priority 0;
+        policy accept;
+
+        # Allow existing connections
+        ct state established,related accept
+
+        # Allow loopback
+        oif "lo" accept
+    }
+}
