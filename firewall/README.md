@@ -11,6 +11,13 @@ For a generic drop/accept rule by port number: \
 To specify a host, simply add `ip saddr <X.X.X.X>` anywhere after `<input|output>` (this is called the chain): \
 `sudo nft add rule inet filter <input|output> <tcp|udp> dport <port_number> ip saddr <X.X.X.X> <accept|drop>`
 
+### Persisting rules
+Persistent rules are stored in `/etc/nftables.conf` \
+To persist the current ruleset across reboots, run `sudo nft list ruleset > /etc/nftables.conf` \
+\
+New rules are additive by default, so you may want to flush them before updating the in-memory rules: `sudo nft flush ruleset` \
+To load persisted rules into memory, run `sudo nft -f <path/to/file>`
+
 ## Backups
 nft ruleset backups are stored in `/etc/nftables/nftables-backup-*.nft`, where * represents a timestamp. \
 These rules are backed up any time the `firewall/firewall_config.sh` script is run. \
