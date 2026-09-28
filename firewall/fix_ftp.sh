@@ -1,3 +1,5 @@
+#!/bin/bash
+
 . ./firewall_config.sh
 
 verify_root
