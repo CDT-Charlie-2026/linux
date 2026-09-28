@@ -1,6 +1,6 @@
 # Linux Firewall Configuration - nftables
 ## IF ALL ELSE FAILS
-Run `sudo nft flush ruleset`, and set up your own firewall
+Run `sudo nft flush ruleset && sudo echo "" > /etc/nftables.conf`, and set up your own firewall
 
 ## Usage
 Simply run `firewall/firewall_config.sh`. If it can't find the IP address, use the desired IP as the first argument, i.e. `firewall/firewall_config.sh <IP addr>`
