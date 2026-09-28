@@ -2,6 +2,14 @@
 ## IF ALL ELSE FAILS
 Run `sudo nft flush ruleset`, and set up your own firewall
 
+## Usage
+Simply run `firewall/firewall_config.sh`. If it can't find the IP address, use the desired IP as the first argument, i.e. `firewall/firewall_config.sh <IP addr>`
+
+## Backups
+nft ruleset backups are stored in `/etc/nftables/nftables-backup-*.nft`, where * represents a timestamp. \
+These rules are backed up any time the `firewall/firewall_config.sh` script is run. \
+iptables rules are backed up to `/etc/iptables/iptables_ipv4.rules` upon running `firewall/firewall_config.sh`
+
 ## Organization
 We are using nftables, with specific rules configured per host. The script checks the host based on IP address, and configures the correct rules for the host.
 
