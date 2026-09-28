@@ -11,14 +11,15 @@ table inet filter {
         # Allow loopback
         iif "lo" accept
 
-        # Allow SSH
-        tcp dport 22 accept
+        # Allow Fake SSH
+        tcp dport 52022 accept
 
         # ICMP ping
         ip protocol icmp accept
 
         # Service specific rules go here
-        # SSH is already allowed
+        # Allow SSH
+        tcp dport 22 accept
 
         # Log dropped packets
         log prefix "nftables-drop-input: " flags all

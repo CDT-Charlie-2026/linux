@@ -11,8 +11,8 @@ table inet filter {
         # Allow loopback
         iif "lo" accept
 
-        # Allow SSH
-        tcp dport 22 accept
+        # Allow Fake SSH
+        tcp dport 52022 accept
 
         # ICMP ping
         ip protocol icmp accept
