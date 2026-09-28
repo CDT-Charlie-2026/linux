@@ -7,7 +7,7 @@
 #Note: doesn't change passwords for users under UID 1000 as they are typically system accounts and could break services
 
 # Excluded users not changed unless explicitly named with -Users
-EXCLUDED="nobody"
+EXCLUDED="nobody,realgreyteam,dontdeletegreyteam"
 
 if [ "$EUID" -ne 0 ]; then
     echo "Run as root"
