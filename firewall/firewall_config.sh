@@ -324,6 +324,8 @@ main() {
 
     echo "Detected distribution: $distro"
 
+    backup_iptables
+
     uninstall_ufw
 
     verify_nft_installation
