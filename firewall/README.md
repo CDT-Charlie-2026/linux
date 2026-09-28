@@ -5,6 +5,12 @@ Run `sudo nft flush ruleset`, and set up your own firewall
 ## Usage
 Simply run `firewall/firewall_config.sh`. If it can't find the IP address, use the desired IP as the first argument, i.e. `firewall/firewall_config.sh <IP addr>`
 
+## Adding your own rules
+For a generic drop/accept rule by port number: \
+`sudo nft add rule inet filter <input|output> <tcp|udp> dport <port_number> <accept|drop>` \
+To specify a host, simply add `ip saddr <X.X.X.X>` anywhere after `<input|output>` (this is called the chain): \
+`sudo nft add rule inet filter <input|output> <tcp|udp> dport <port_number> ip saddr <X.X.X.X> <accept|drop>`
+
 ## Backups
 nft ruleset backups are stored in `/etc/nftables/nftables-backup-*.nft`, where * represents a timestamp. \
 These rules are backed up any time the `firewall/firewall_config.sh` script is run. \
