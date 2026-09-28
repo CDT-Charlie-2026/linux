@@ -21,7 +21,8 @@ iptables_backup_file=""$iptables_backup_dir"/iptables_ipv4.rules"
 # =================
 
 # ===== Detect Host IP =====
-host_ip="$(ip -4 -o addr show scope global | awk '$4 ~ /^10\.110\.10\./ {print $4}' | cut -d/ -f1):-"$1""
+parsed_ip="$(ip -4 -o addr show scope global | awk '$4 ~ /^10\.110\.10\./ {print $4}' | cut -d/ -f1)"
+host_ip="${parsed_ip:-$1}"
 if [ -z "$host_ip" ]; then
     echo -e "${red}Could not determine competition host IP.${reset}"
     exit 1
