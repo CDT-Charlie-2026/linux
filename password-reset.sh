@@ -6,7 +6,7 @@
 
 #Note: doesn't change passwords for users under UID 1000 as they are typically system accounts and could break services
 
-# Excluded users changed unless explicitly named with -Users
+# Excluded users not changed unless explicitly named with -Users
 EXCLUDED="nobody"
 
 if [ "$EUID" -ne 0 ]; then
