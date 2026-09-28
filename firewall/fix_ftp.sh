@@ -1,6 +1,8 @@
 #!/bin/bash
 
-. ./firewall_config.sh
+script_dir="$(dirname "$(realpath "${BASH_SOURCE[0]}")")"
+
+. ""$script_dir"/firewall_config.sh"
 
 verify_root
 
