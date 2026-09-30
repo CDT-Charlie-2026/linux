@@ -32,19 +32,19 @@ echo "Detected host IP: $host_ip"
 
 # ===== Rules File =====
 case "$host_ip" in
-    10.110.10.11)
+    *10.110.10.11*)
         rules_file="$script_dir/rules/geonosis.nft"
         ;;
-    10.110.10.12)
+    *10.110.10.12*)
         rules_file="$script_dir/rules/mandalore.nft"
         ;;
-    10.110.10.13)
+    *10.110.10.13*)
         rules_file="$script_dir/rules/kashyyyk.nft"
         ;;
-    10.110.10.14)
+    *10.110.10.14*)
         rules_file="$script_dir/rules/utapau.nft"
         ;;
-    10.110.10.15)
+    *10.110.10.15*)
         rules_file="$script_dir/rules/mustafar.nft"
         ;;
     *)
