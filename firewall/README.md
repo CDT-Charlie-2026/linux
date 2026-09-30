@@ -8,8 +8,8 @@ Simply run `firewall/firewall_config.sh`. If it can't find the IP address, use t
 ## Adding your own rules
 For a generic drop/accept rule by port number: \
 `sudo nft add rule inet filter <input|output> <tcp|udp> dport <port_number> <accept|drop>` \
-To specify a host, simply add `ip saddr <X.X.X.X>` anywhere after `<input|output>` (this is called the chain): \
-`sudo nft add rule inet filter <input|output> <tcp|udp> dport <port_number> ip saddr <X.X.X.X> <accept|drop>`
+To specify a host, simply add `ip saddr <X.X.X.X>` before specifying the transport layer protocol: \
+`sudo nft add rule inet filter <input|output> ip saddr <X.X.X.X> <tcp|udp> dport <port_number> <accept|drop>`
 
 ### Persisting rules
 Persistent rules are stored in `/etc/nftables.conf` \
