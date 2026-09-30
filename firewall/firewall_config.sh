@@ -312,6 +312,8 @@ apply_default_ruleset() {
     if ! read -r -t 15 -p "Press ENTER to persist, or wait 15 seconds to rollback: " _; then
         restore_backup ""$backup_dir"/"$backup_name""
     fi
+    # Allow related and established traffic once remote access is guaranteed
+    nft add rule inet filter input ct state established,related accept
     save_current_ruleset
     enable_nftables
     

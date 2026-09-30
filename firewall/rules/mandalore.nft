@@ -6,7 +6,8 @@ table inet filter {
         policy drop;
 
         # Allow existing connections
-        ct state established,related accept
+        # This is commented out to test remote access before applying the ruleset
+        # ct state established,related accept
 
         # Allow loopback
         iif "lo" accept
