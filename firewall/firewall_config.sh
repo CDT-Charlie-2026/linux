@@ -313,7 +313,7 @@ apply_default_ruleset() {
         restore_backup ""$backup_dir"/"$backup_name""
     fi
     # Allow related and established traffic once remote access is guaranteed
-    nft add rule inet filter input ct state established,related accept
+    nft insert rule inet filter input ct state established,related accept
     save_current_ruleset
     enable_nftables
     
